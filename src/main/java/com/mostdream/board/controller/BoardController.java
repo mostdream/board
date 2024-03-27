@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Controller
 @RequiredArgsConstructor //의존성 주입을 받아야함
 @RequestMapping("/board") // 보드로 주는 내용을 받는다
