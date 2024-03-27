@@ -66,4 +66,15 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/";
     }
+
+    @GetMapping("/paging")
+    public String paging(Model model,@RequestParam(value = "page", required = false, defaultValue = "1") int page){
+        //value = "page" : 파라미터 이름 의미.
+        // required = false는 필수 아님 의미.
+
+        //해당 페이지에서 보여줄 글 목록을 디비로부터 불러와야함.
+        List<BoardDTO> pagingList = boardService.pagingList(page); //목록이기 때문에 글 목록을 불러올  List 객체 필요.
+        //System.out.println("pagingList = " + pagingList); //페이징 데이터가 잘 넘어가지는지 콘솔에 찍어보며 테스트.
+        return "paging";
+    }
 }

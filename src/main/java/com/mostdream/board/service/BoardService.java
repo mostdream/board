@@ -5,7 +5,9 @@ import com.mostdream.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +37,16 @@ public class BoardService {
 
     public void delete(Long id) {
         boardRepository.delete(id);
+    }
+
+    public List<BoardDTO> pagingList(int page) {
+        int pageLimit = 3;
+        int pagingStart = (page - 1) * pageLimit;
+        Map<String, Integer> pagingParams = new HashMap<>();
+        pagingParams.put("start", pagingStart);
+        pagingParams.put("limit", pageLimit);
+        List<BoardDTO> pagingList = boardRepository.pagingList(pagingParams);
+
+        return pagingList;
     }
 }
