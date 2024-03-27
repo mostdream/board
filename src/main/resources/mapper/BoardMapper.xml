@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+    <insert id="save" parameterType="board"> <!-- 본래는 패키지 풀네임(com.mostdream.board.dto.BoardDTO)을 작성하지만 mybatis-config.xml에서 지정한 alias값으로도 사용 가능-->
+        insert into board_table(boardWriter, boardPass, boardTitle, boardContents)
+        values(#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+    </insert>
+
+    <select id="findAll" resultType="board"> <!--select 쿼리를 사용할 때는 resultType을 반드시 쓴다.-->
+        select * from board_table order by id desc
+    </select>
+
+    <select id="findById" parameterType="Long" resultType="board">
+        select * from board_table where id=#{id}
+    </select>
+
+    <update id="updateHits" parameterType="Long">
+        update board_table set boardHits = boardHits + 1 where id = #{id}
+    </update>
+
+    <update id="update" parameterType="board">
+        update board_table set boardTitle=#{boardTitle}, boardContents=#{boardContents},
+        boardWriter=#{boardWriter}, boardPass=#{boardPass}
+        where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="Long">
+        delete from board_table where id=#{id}
+    </delete>
+</mapper>
