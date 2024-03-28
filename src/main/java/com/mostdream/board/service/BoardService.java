@@ -1,7 +1,6 @@
 package com.mostdream.board.service;
 
 import com.mostdream.board.dto.BoardDTO;
-import com.mostdream.board.dto.PageDTO;
 import com.mostdream.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,9 +39,8 @@ public class BoardService {
         boardRepository.delete(id);
     }
 
-    int pageLimit = 3;
-    int blockLimit = 3;
     public List<BoardDTO> pagingList(int page) {
+        int pageLimit = 3;
         int pagingStart = (page - 1) * pageLimit;
         Map<String, Integer> pagingParams = new HashMap<>();
         pagingParams.put("start", pagingStart);
@@ -50,23 +48,5 @@ public class BoardService {
         List<BoardDTO> pagingList = boardRepository.pagingList(pagingParams);
 
         return pagingList;
-    }
-
-    public PageDTO pagingParam(int page){
-        int boardCount  = boardRepository.boardCount();
-        int maxPage     = (int)(Math.ceil((double) boardCount / pageLimit));
-        int startPage   = (((int)(Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-        int endPage     = startPage + blockLimit - 1;
-        if (endPage > maxPage) {
-            endPage = maxPage;
-        }
-
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setPage(page);
-        pageDTO.setMaxPage(maxPage);
-        pageDTO.setStartPage(startPage);
-        pageDTO.setEndPage(endPage);
-
-        return pageDTO;
     }
 }

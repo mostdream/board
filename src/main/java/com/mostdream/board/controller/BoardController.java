@@ -2,7 +2,6 @@ package com.mostdream.board.controller;
 
 
 import com.mostdream.board.dto.BoardDTO;
-import com.mostdream.board.dto.PageDTO;
 import com.mostdream.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -76,11 +75,6 @@ public class BoardController {
         //해당 페이지에서 보여줄 글 목록을 디비로부터 불러와야함.
         List<BoardDTO> pagingList = boardService.pagingList(page); //목록이기 때문에 글 목록을 불러올  List 객체 필요.
         //System.out.println("pagingList = " + pagingList); //페이징 데이터가 잘 넘어가지는지 콘솔에 찍어보며 테스트.
-
-        PageDTO pageDTO = boardService.pagingParam(page);
-        model.addAttribute("boardList",pagingList);
-        model.addAttribute("paging",pageDTO);
-
         return "paging";
     }
 }
