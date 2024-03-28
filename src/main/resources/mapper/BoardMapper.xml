@@ -33,4 +33,8 @@
     <select id="pagingList" parameterType="java.util.HashMap" resultType="board"> <!--아래의 2개 변수는 BoardService.java 파일에 있는 pagingParams에 태워 보내는 파라미터로 쓰면 됨.-->
         select * from board_table order by id desc limit #{start}, #{limit}
     </select>
+
+     <select id="boardCount" resultType="Integer">
+         select count(id) from board_table
+     </select>
 </mapper>
