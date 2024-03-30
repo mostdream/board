@@ -26,7 +26,7 @@ public class BoardController {
     public String save(@ModelAttribute BoardDTO boardDTO){
         int saveResult = boardService.save(boardDTO); //글작성 성공 여부를 이 로직에서 판단
         if(saveResult > 0){
-            return "redirect:/board/";
+            return "redirect:/board/paging";
         } else {
             return "save";
         }
@@ -40,10 +40,12 @@ public class BoardController {
     }
 
     @GetMapping //상세 페이지로 넘길 때는 파라미터만 있기 때문에 주소 링크가 별도로 없어도 됨
-    public String findbyid(@RequestParam("id") Long id, Model model){
+    public String findById(@RequestParam("id") Long id,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int page, Model model){
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board",boardDTO);
+        model.addAttribute("page",page);
         return "detail";
     }
 
