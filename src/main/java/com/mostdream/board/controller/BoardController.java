@@ -2,8 +2,10 @@ package com.mostdream.board.controller;
 
 
 import com.mostdream.board.dto.BoardDTO;
+import com.mostdream.board.dto.CommentDTO;
 import com.mostdream.board.dto.PageDTO;
 import com.mostdream.board.service.BoardService;
+import com.mostdream.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/board") // 보드로 주는 내용을 받는다
 public class BoardController {
     private final BoardService boardService; //주입을 받는다.
+    private final CommentService commentService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -46,6 +49,10 @@ public class BoardController {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board",boardDTO);
         model.addAttribute("page",page);
+
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        model.addAttribute("commentList",commentDTOList);
+
         return "detail";
     }
 
